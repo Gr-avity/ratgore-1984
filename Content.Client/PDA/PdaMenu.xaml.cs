@@ -188,7 +188,8 @@ namespace Content.Client.PDA
 
             var coordinates = state.Coordinates;
 
-            CoordinatesLabel.SetMarkup(coordinates);
+            CoordinatesLabel.SetMarkup(Loc.GetString("comp-pda-ui-coordinates",
+                    ("coordinates", coordinates)));
 
             AddressLabel.Text = state.Address?.ToUpper() ?? " - ";
 
