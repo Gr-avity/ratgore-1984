@@ -919,6 +919,38 @@ public sealed partial class ShuttleNavControl : BaseShuttleControl
     }
 
     // Rat-start
+    private static void DrawFilledRing(DrawingHandleScreen handle, Vector2 center,
+        float innerRadius, float outerRadius, Color fillColor, Color outlineColor, int segments = 64)
+    {
+        var verts = new Vector2[segments * 6];
+        for (int i = 0; i < segments; i++)
+        {
+            float a0 = MathF.Tau * i / segments;
+            float a1 = MathF.Tau * (i + 1) / segments;
+            var d0 = new Vector2(MathF.Cos(a0), MathF.Sin(a0));
+            var d1 = new Vector2(MathF.Cos(a1), MathF.Sin(a1));
+            verts[i * 6 + 0] = center + d0 * innerRadius;
+            verts[i * 6 + 1] = center + d0 * outerRadius;
+            verts[i * 6 + 2] = center + d1 * outerRadius;
+            verts[i * 6 + 3] = center + d0 * innerRadius;
+            verts[i * 6 + 4] = center + d1 * outerRadius;
+            verts[i * 6 + 5] = center + d1 * innerRadius;
+        }
+        handle.DrawPrimitives(DrawPrimitiveTopology.TriangleList, verts, fillColor);
+
+        var outerVerts = new Vector2[segments];
+        var innerVerts = new Vector2[segments];
+        for (int i = 0; i < segments; i++)
+        {
+            float a = MathF.Tau * i / segments;
+            var dir = new Vector2(MathF.Cos(a), MathF.Sin(a));
+            outerVerts[i] = center + dir * outerRadius;
+            innerVerts[i] = center + dir * innerRadius;
+        }
+        handle.DrawPrimitives(DrawPrimitiveTopology.LineLoop, outerVerts, outlineColor);
+        handle.DrawPrimitives(DrawPrimitiveTopology.LineLoop, innerVerts, outlineColor);
+    }
+
     private void DrawZoneCircles(DrawingHandleScreen handle)
     {
         if (_coordinates == null || _rotation == null)
@@ -948,20 +980,24 @@ public sealed partial class ShuttleNavControl : BaseShuttleControl
         var ourWorldMatrix = Matrix3x2.Multiply(posMatrix, ourEntMatrix);
         Matrix3x2.Invert(ourWorldMatrix, out var ourWorldMatrixInvert);
 
-        // Центр карты (0,0) в мировых координатах
         var mapCenterWorld = Vector2.Zero;
-
-        // Преобразуем центр карты через ту же матрицу, что и другие объекты
         var mapCenterUI = Vector2.Transform(mapCenterWorld, ourWorldMatrixInvert);
-        mapCenterUI.Y = -mapCenterUI.Y; // Инвертируем Y для UI
-
-        // Масштабируем для отображения
+        mapCenterUI.Y = -mapCenterUI.Y;
         var uiCenter = ScalePosition(mapCenterUI);
 
-        // Рисуем зоны с фиксированным центром в координатах карты (0,0)
-        handle.DrawCircle(uiCenter, 650 * MinimapScale, new Color(255, 0, 0, 50), false);
-        handle.DrawCircle(uiCenter, 3950 * MinimapScale, new Color(0, 255, 0, 50), false);
-        handle.DrawCircle(uiCenter, 4350 * MinimapScale, new Color(0, 255, 0, 50), false);
+        // Центр
+        handle.DrawCircle(uiCenter, 500 * MinimapScale, new Color(1f, 0f, 0f, 0.03f));
+        handle.DrawCircle(uiCenter, 500 * MinimapScale, new Color(1f, 0f, 0f, 0.2f), filled: false);
+
+        // Внешнее кольцо
+        DrawFilledRing(handle, uiCenter,
+            4000 * MinimapScale, 4500 * MinimapScale,
+            new Color(0f, 1f, 0f, 0.03f), new Color(0f, 1f, 0f, 0.2f));
+
+        // Хадал
+        DrawFilledRing(handle, uiCenter,
+            10000 * MinimapScale, 20000 * MinimapScale,
+            new Color(1f, 0f, 0f, 0.01f), new Color(1f, 0f, 0f, 0.1f));
     }
     // Rat-end
 
