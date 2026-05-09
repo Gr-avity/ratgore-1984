@@ -22,7 +22,7 @@ using Robust.Shared.Physics.Collision.Shapes;
 using Robust.Shared.Physics.Components;
 using Robust.Shared.Physics.Systems;
 using Robust.Shared.Threading;
-
+using Content.Client._Rat.SpaceEvents; // Rat
 
 namespace Content.Client.Shuttles.UI;
 
@@ -39,6 +39,7 @@ public sealed partial class ShuttleNavControl : BaseShuttleControl
     private readonly ProjectileIFFSystem _projectileIFF;
     private readonly FixtureSystem _fixtures;
     private readonly SpriteSystem _sprites;
+	private readonly EmpZoneClientSystem _empZone;
 
     /// <summary>
     /// Used to transform all of the radar objects. Typically is a shuttle console parented to a grid.
@@ -247,6 +248,7 @@ public sealed partial class ShuttleNavControl : BaseShuttleControl
         _projectileIFF = EntManager.System<ProjectileIFFSystem>();
         _fixtures = EntManager.System<FixtureSystem>();
         _sprites = EntManager.System<SpriteSystem>();
+		_empZone = EntManager.System<EmpZoneClientSystem>();
         drawJob = new ShuttleCalculatePositionsJob()
         {
             EntManager = EntManager,
@@ -998,7 +1000,19 @@ public sealed partial class ShuttleNavControl : BaseShuttleControl
         DrawFilledRing(handle, uiCenter,
             10000 * MinimapScale, 20000 * MinimapScale,
             new Color(1f, 0f, 0f, 0.01f), new Color(1f, 0f, 0f, 0.1f));
-    }
+
+        if (_empZone.ZoneActive)
+        {
+            var empCenterUI = Vector2.Transform(_empZone.ZoneCenter, ourWorldMatrixInvert);
+            empCenterUI.Y = -empCenterUI.Y;
+            var empScreenPos = ScalePosition(empCenterUI);
+            var empScreenRadius = _empZone.ZoneRadius * MinimapScale;
+
+            handle.DrawCircle(empScreenPos, empScreenRadius, new Color(0f, 0.8f, 1f, 0.03f));
+            handle.DrawCircle(empScreenPos, empScreenRadius, new Color(0f, 0.8f, 1f, 0.2f), filled: false);
+        }
+
+ }
     // Rat-end
 
     private Vector2 InverseScalePosition(Vector2 value)

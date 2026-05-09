@@ -17,6 +17,7 @@ using Robust.Shared.Map.Components;
 using Robust.Shared.Physics.Components;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
+using Content.Client._Rat.SpaceEvents; // Rat
 
 namespace Content.Client.Shuttles.UI;
 
@@ -28,6 +29,8 @@ public sealed partial class ShuttleMapControl : BaseShuttleControl
     [Dependency] private readonly IMapManager _mapManager = default!;
     private readonly ShuttleSystem _shuttles;
     private readonly SharedTransformSystem _xformSystem;
+
+    private EmpZoneClientSystem _empZone = default!;
 
     protected override bool Draggable => true;
 
@@ -77,6 +80,7 @@ public sealed partial class ShuttleMapControl : BaseShuttleControl
         RobustXamlLoader.Load(this);
         _shuttles = EntManager.System<ShuttleSystem>();
         _xformSystem = EntManager.System<SharedTransformSystem>();
+		_empZone = EntManager.System<EmpZoneClientSystem>();
         var cache = IoCManager.Resolve<IResourceCache>();
 
         _physicsQuery = EntManager.GetEntityQuery<PhysicsComponent>();
@@ -233,6 +237,17 @@ public sealed partial class ShuttleMapControl : BaseShuttleControl
         DrawFilledRing(handle, screenOrigin,
             10000f * MinimapScale, 20000f * MinimapScale,
             new Color(1f, 0f, 0f, 0.01f), new Color(1f, 0f, 0f, 0.1f));
+
+	    if (_empZone.ZoneActive)
+        {
+            var empRelPos = Vector2.Transform(_empZone.ZoneCenter, matty);
+            empRelPos = empRelPos with { Y = -empRelPos.Y };
+            var empScreenPos = ScalePosition(empRelPos);
+            var empScreenRadius = _empZone.ZoneRadius * MinimapScale;
+
+            handle.DrawCircle(empScreenPos, empScreenRadius, new Color(0f, 0.8f, 1f, 0.03f));
+            handle.DrawCircle(empScreenPos, empScreenRadius, new Color(0f, 0.8f, 1f, 0.2f), filled: false);
+        }
     }
     // Rat-end
 
