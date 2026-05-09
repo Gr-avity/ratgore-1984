@@ -77,7 +77,7 @@
               Burn: -1.7
               Airloss: -1.7
               Toxin: -1.7
-              Genetic: -1.7 # Ratgore: Buffed to fit the 0,5 damage healing per cycle, made as trombocite trait replacer.
+              Genetic: -1.7 # Ratgore: Buffed to fit the 0,5 damage healing per cycle, made as trombocite trait replacer. For some reason it healed 0,2 when it was 0,75
     - type: ReverseEngineering # SectorCrescent
       difficulty: 3
       recipes:
