@@ -93,12 +93,24 @@ public sealed partial class ShipRepairSystem : SharedShipRepairSystem
                     // process entity ghosts
                     foreach (var (specId, spec) in chunk.Entities)
                     {
-                        var origUid = spec.OriginalEntity == null ? (EntityUid?)null : GetEntity(spec.OriginalEntity.Value);
-                        // this will get trolled by PVS but hope repairable entities aren't too often on the same grid but at a far position
-                        if (origUid != null && !TerminatingOrDeleted(origUid) && Transform(origUid.Value).GridUid == grid.Owner)
-                            continue;
+                        // rat-change start
+                        // var origUid = spec.OriginalEntity == null ? (EntityUid?)null : GetEntity(spec.OriginalEntity.Value);
+                        // // this will get trolled by PVS but hope repairable entities aren't too often on the same grid but at a far position
+                        // if (origUid != null && !TerminatingOrDeleted(origUid) && Transform(origUid.Value).GridUid == grid.Owner)
+                        //     continue;
+                        // rat-change end
 
                         var specCoords = new EntityCoordinates(grid, spec.LocalPosition);
+                        // rat-change start
+                        var origUid = spec.OriginalEntity == null ? (EntityUid?)null : GetEntity(spec.OriginalEntity.Value);
+                        if (origUid != null && !TerminatingOrDeleted(origUid.Value))
+                        {
+                            var origXform = Transform(origUid.Value);
+                            if (origXform.Coordinates.TryDistance(EntityManager, specCoords, out var distance) &&
+                                distance <= 0.01f)
+                                continue;
+                        }
+                        // rat-change end
                         var specMapPos = _transform.ToMapCoordinates(specCoords);
 
                         // check if it's actually in range

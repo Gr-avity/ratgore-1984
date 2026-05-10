@@ -7,8 +7,9 @@ namespace Content.Shared._Mono.ShipRepair.Components;
 /// Needed because without this client will start showing missing entities immediately but that will also show underfloor entities.
 /// </summary>
 [RegisterComponent, NetworkedComponent]
+[AutoGenerateComponentState] // rat-change
 public sealed partial class RepairDataEyeComponent : Component
 {
-    [DataField]
+    [DataField, AutoNetworkedField] // rat-change
     public int Count = 0;
 }

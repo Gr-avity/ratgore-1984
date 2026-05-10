@@ -85,8 +85,9 @@ public abstract partial class SharedShipRepairSystem : EntitySystem
                 var delay = repairable.RepairTime * ent.Comp.RepairTimeMultiplier;
                 var cost = repairable.RepairCost;
 
+                var localClickPos = Vector2.Transform(clickWorld, _transform.GetInvWorldMatrix(targetGrid)); // rat-change
                 // only consider it if it's close enough
-                if ((spec.LocalPosition - clickPos.Position).Length() > ent.Comp.EntitySearchRadius)
+                if ((spec.LocalPosition - localClickPos).Length() > ent.Comp.EntitySearchRadius) // rat-change
                     continue;
 
                 var needsRepair = true;

@@ -150,6 +150,11 @@
               node: start
             - !type:DoActsBehavior
               acts: ["Destruction"]
+    # rat-change
+    - type: ShipRepairable
+      repairTo: Grille
+      repairTime: 2
+      repairCost: 2
 
 - type: entity
   id: ClockworkGrilleBroken
@@ -167,6 +172,11 @@
     - type: Construction
       graph: ClockGrille
       node: clockGrilleBroken
+    # Mono
+    - type: ShipRepairable
+      repairTo: ClockworkGrille
+      repairTime: 2
+      repairCost: 2
 
 - type: entity
   id: GrilleDiagonal

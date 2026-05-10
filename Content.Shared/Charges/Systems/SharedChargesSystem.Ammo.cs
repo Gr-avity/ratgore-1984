@@ -67,6 +67,11 @@ public abstract partial class SharedChargesSystem : EntitySystem
 
     public int TakeCharges(Entity<LimitedChargesAmmoComponent> ent, int UpTo)
     {
+        // rat-change start
+        if (ent.Comp.Charges <= 0)
+            return 0;
+        // rat-change end
+
         if (!TryComp<StackComponent>(ent, out var stack))
         {
             var took = Math.Min(ent.Comp.Charges, UpTo);
@@ -77,7 +82,7 @@ public abstract partial class SharedChargesSystem : EntitySystem
             return took;
         }
 
-        var takeAmount = Math.Min(stack.Count, UpTo / ent.Comp.Charges);
+        var takeAmount = Math.Min(stack.Count, (UpTo + ent.Comp.Charges - 1) / ent.Comp.Charges); // rat-change
         _stack.SetCount(ent, stack.Count - takeAmount, stack);
         return takeAmount * ent.Comp.Charges;
     }

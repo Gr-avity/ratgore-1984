@@ -21,9 +21,9 @@ public sealed partial class ShipRepairSystem
     [AdminCommand(AdminFlags.Admin)]
     public void RepairGridCmd(IConsoleShell shell, string argstr, string[] args)
     {
-        if (!EntityUid.TryParse(args[0], out var uid))
+        if (args.Length < 1 || !EntityUid.TryParse(args[0], out var uid)) // rat-change
         {
-            shell.WriteError("Couldn't parse entity.");
+            shell.WriteError("Usage: repairgrid <uid>"); // rat-change
             return;
         }
 
@@ -88,9 +88,9 @@ public sealed partial class ShipRepairSystem
     [AdminCommand(AdminFlags.Admin)]
     public void SnapshotGridCmd(IConsoleShell shell, string argstr, string[] args)
     {
-        if (!EntityUid.TryParse(args[0], out var uid))
+        if (args.Length < 1 || !EntityUid.TryParse(args[0], out var uid)) // rat-change
         {
-            shell.WriteError("Couldn't parse entity.");
+            shell.WriteError("Usage: snapshotgrid <uid>"); // rat-change
             return;
         }
 

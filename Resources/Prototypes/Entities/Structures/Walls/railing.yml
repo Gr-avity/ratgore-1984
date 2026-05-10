@@ -138,6 +138,10 @@
     cost: 2
     delay: 2
     fx: EffectRCDDeconstruct2
+  # rat-change
+  - type: ShipRepairable
+    repairTime: 1
+    repairCost: 1
 
 - type: entity
   parent: BaseStructure
@@ -202,6 +206,10 @@
     cost: 2
     delay: 2
     fx: EffectRCDDeconstruct2
+  # rat-change
+  - type: ShipRepairable
+    repairTime: 1
+    repairCost: 1
 
 - type: entity
   parent: BaseStructure
@@ -281,3 +289,7 @@
     cost: 2
     delay: 2
     fx: EffectRCDDeconstruct2
+  # rat-change
+  - type: ShipRepairable
+    repairTime: 1
+    repairCost: 1
