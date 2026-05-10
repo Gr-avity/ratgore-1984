@@ -793,5 +793,14 @@ Entries:
     id: 98
     time: '2026-05-10T02:38:50.0000000+00:00'
     url: https://github.com/ss14-art/ratgore/pull/192
+  - author: NEirotoXiN00
+    changes:
+      - type: Fix
+        message: Исправлена ошибка в UI
+      - type: Tweak
+        message: Заменены устаревшие методы
+    id: 99
+    time: '2026-05-10T09:10:47.0000000+00:00'
+    url: https://github.com/ss14-art/ratgore/pull/193
 Name: Rat
 Order: -1
