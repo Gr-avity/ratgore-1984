@@ -70,6 +70,10 @@
     bodyType: static
   - type: StaticPrice
     price: 11
+  # Mono
+  - type: ShipRepairable
+    repairTime: 1
+    repairCost: 1
 
 # Goobstation - Allow device-on-pipe stacking
 

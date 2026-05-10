@@ -25,6 +25,10 @@
   - type: Tag
     tags:
       - SpreaderIgnore
+  # Mono
+  - type: ShipRepairable
+    repairTime: 5
+    repairCost: 10
 
 - type: entity
   id: AtmosDeviceFanDirectional
@@ -54,3 +58,7 @@
   - type: Tag
     tags:
       - SpreaderIgnore
+  # Mono
+  - type: ShipRepairable
+    repairTime: 4
+    repairCost: 8

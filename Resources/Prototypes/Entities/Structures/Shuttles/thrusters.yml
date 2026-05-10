@@ -102,6 +102,10 @@
       shader: unshaded
       visible: false
       offset: 0, 1
+  # Mono
+  - type: ShipRepairable
+    repairTime: 5
+    repairCost: 10
 
 - type: entity
   id: ThrusterUnanchored
@@ -205,6 +209,10 @@
     damageModifierSet: Electronic
   - type: StaticPrice
     price: 2000
+  # Mono
+  - type: ShipRepairable
+    repairTime: 6
+    repairCost: 12
 
 - type: entity
   id: GyroscopeUnanchored

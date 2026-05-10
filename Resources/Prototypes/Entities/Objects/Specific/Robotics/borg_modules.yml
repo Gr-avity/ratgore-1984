@@ -337,7 +337,7 @@
   - type: ItemBorgModule
     items:
     - RCDRecharging
-    - RPDRecharging
+    - ShipRepairDeviceRecharging # Mono
   - type: BorgModuleIcon
     icon: { sprite: Interface/Actions/actions_borg.rsi, state: rcd-module }
 

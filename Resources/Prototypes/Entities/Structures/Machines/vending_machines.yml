@@ -106,6 +106,10 @@
     price: 100
   - type: Appearance
   - type: WiresVisuals
+  # Mono
+  - type: ShipRepairable
+    repairTime: 5
+    repairCost: 10
 
 - type: entity
   parent: VendingMachine

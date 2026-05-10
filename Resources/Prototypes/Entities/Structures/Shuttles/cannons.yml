@@ -398,3 +398,7 @@
     count: 5
   - type: Machine
     board: ShuttleGunKineticCircuitboard
+  # Mono
+  - type: ShipRepairable
+    repairTime: 10
+    repairCost: 25

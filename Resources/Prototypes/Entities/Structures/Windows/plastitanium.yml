@@ -51,6 +51,10 @@
       sprite: Structures/Windows/cracks.rsi
   - type: StaticPrice
     price: 100
+  # Mono
+  - type: ShipRepairable
+    repairTime: 8
+    repairCost: 8
 
 - type: entity
   parent: ShuttleWindow

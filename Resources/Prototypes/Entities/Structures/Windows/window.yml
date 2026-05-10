@@ -91,6 +91,10 @@
   - type: InteractionVerbs
     allowedVerbs:
     - KnockOn
+  # Mono
+  - type: ShipRepairable
+    repairTime: 3
+    repairCost: 3
 
 - type: entity
   id: WindowRCDResistant
@@ -194,6 +198,10 @@
   - type: InteractionVerbs
     allowedVerbs:
     - KnockOn
+    # Mono
+  - type: ShipRepairable
+    repairTime: 2
+    repairCost: 2
 
 - type: entity
   id: WindowDirectionalRCDResistant

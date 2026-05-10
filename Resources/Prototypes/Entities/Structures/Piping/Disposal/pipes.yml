@@ -63,6 +63,10 @@
       - Disposal
   - type: StaticPrice
     price: 22
+  # Mono
+  - type: ShipRepairable
+    repairTime: 1
+    repairCost: 1
 
 - type: entity
   id: DisposalHolder

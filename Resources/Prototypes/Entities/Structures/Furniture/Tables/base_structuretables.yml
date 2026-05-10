@@ -39,6 +39,10 @@
       collection: FootstepHull
   - type: RequireProjectileTarget
   - type: ThrownItemImmune
+  # Mono
+  - type: ShipRepairable
+    repairTime: 1
+    repairCost: 2
 
 - type: entity
   id: CounterBase

@@ -116,6 +116,10 @@
   - type: Battery
     maxCharge: 120000000
     startingCharge: 120000000
+  # Mono
+  - type: ShipRepairable
+    repairTime: 6
+    repairCost: 20
 
 - type: entity
   parent: SMESBasic
@@ -161,6 +165,10 @@
     collectionName: smes
     sprite: Structures/Power/smes.rsi
     state: advancedsmes-static
+  # Mono
+  - type: ShipRepairable
+    repairTime: 8
+    repairCost: 35
 
 - type: entity
   parent: SMESAdvanced

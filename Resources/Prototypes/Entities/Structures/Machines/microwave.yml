@@ -105,6 +105,10 @@
   - type: GuideHelp
     guides:
     - Chef
+  # Mono
+  - type: ShipRepairable
+    repairTime: 2
+    repairCost: 3
 
 - type: entity
   id: SyndicateMicrowave

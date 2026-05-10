@@ -41,6 +41,10 @@
   - type: IconSmooth
     key: walls
     mode: NoSprite
+  # Mono
+  - type: ShipRepairable
+    repairTime: 6
+    repairCost: 8
 
 - type: entity
   id: BlastDoorOpen

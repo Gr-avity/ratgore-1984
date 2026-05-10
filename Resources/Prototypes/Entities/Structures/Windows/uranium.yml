@@ -50,6 +50,10 @@
     price: 80
   - type: RadiationBlocker
     resistance: 5
+  # Mono
+  - type: ShipRepairable
+    repairTime: 3
+    repairCost: 3
 
 - type: entity
   id: UraniumWindowDirectional

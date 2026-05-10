@@ -185,6 +185,10 @@
         - output_mv
       sprite: Structures/Power/Generation/portable_generator.rsi
       state: portgen0
+    # Mono
+    - type: ShipRepairable
+      repairTime: 10
+      repairCost: 35
 
 - type: entity
   name: S.U.P.E.R.P.A.C.M.A.N.-type portable generator
@@ -241,6 +245,10 @@
         - output_mv
       sprite: Structures/Power/Generation/portable_generator.rsi
       state: portgen1
+    # Mono
+    - type: ShipRepairable
+      repairTime: 15
+      repairCost: 50
 
 - type: entity
   name: J.R.P.A.C.M.A.N.-type portable generator
@@ -360,3 +368,7 @@
           behaviors:
             - !type:SolutionExplosionBehavior
               solution: tank
+    # Mono
+    - type: ShipRepairable
+      repairTime: 5
+      repairCost: 20

@@ -60,7 +60,11 @@
   - type: RCDDeconstructable
     cost: 2
     delay: 2
-    fx: EffectRCDDeconstruct2  
+    fx: EffectRCDDeconstruct2
+  # Mono
+  - type: ShipRepairable
+    repairTime: 1
+    repairCost: 1
 
 - type: entity
   parent: BaseStructure
@@ -133,7 +137,7 @@
   - type: RCDDeconstructable
     cost: 2
     delay: 2
-    fx: EffectRCDDeconstruct2  
+    fx: EffectRCDDeconstruct2
 
 - type: entity
   parent: BaseStructure
@@ -197,8 +201,8 @@
   - type: RCDDeconstructable
     cost: 2
     delay: 2
-    fx: EffectRCDDeconstruct2  
-    
+    fx: EffectRCDDeconstruct2
+
 - type: entity
   parent: BaseStructure
   id: RailingRound
@@ -276,4 +280,4 @@
   - type: RCDDeconstructable
     cost: 2
     delay: 2
-    fx: EffectRCDDeconstruct2  
+    fx: EffectRCDDeconstruct2

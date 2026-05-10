@@ -50,6 +50,11 @@
     requirePower: true
     highVoltageNode: output
   - type: RequireProjectileTarget
+  # Mono
+  - type: ShipRepairable
+    repairTo: SolarPanel
+    repairTime: 1
+    repairCost: 2
 
 - type: entity
   id: SolarPanelPlasma

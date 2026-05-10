@@ -10,6 +10,8 @@
     BoxInflatable: 8
     RCD: 4
     RCDAmmo: 6
+    ShipRepairDevice: 10 # Mono
+    ShipRepairDeviceAmmo: 20 # Mono
     AccessConfigurator: 4
     ClothingOuterJacketInsulated: 3
 

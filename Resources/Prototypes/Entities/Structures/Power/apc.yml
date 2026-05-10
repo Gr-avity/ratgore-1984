@@ -209,6 +209,10 @@
     startingCharge: 50000
   - type: BatteryDrinkerSource # Parkstation IPCs
     maxAmount: 5000
+  # Mono
+  - type: ShipRepairable
+    repairTime: 3
+    repairCost: 10
 
 - type: entity
   parent: BaseAPC
@@ -220,6 +224,10 @@
     startingCharge: 100000
   - type: BatteryDrinkerSource # Parkstation IPCs
     maxAmount: 12000
+  # Mono
+  - type: ShipRepairable
+    repairTime: 5
+    repairCost: 14
 
 - type: entity
   parent: BaseAPC
@@ -231,6 +239,10 @@
     startingCharge: 150000
   - type: BatteryDrinkerSource # Parkstation IPCs
     maxAmount: 18000
+  # Mono
+  - type: ShipRepairable
+    repairTime: 7
+    repairCost: 17
 
 - type: entity
   parent: BaseAPC
@@ -242,3 +254,7 @@
     startingCharge: 200000
   - type: BatteryDrinkerSource # Parkstation IPCs # Parkstation IPCs
     maxAmount: 26000
+  # Mono
+  - type: ShipRepairable
+    repairTime: 9
+    repairCost: 20

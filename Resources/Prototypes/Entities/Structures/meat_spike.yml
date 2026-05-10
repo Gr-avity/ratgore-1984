@@ -57,3 +57,7 @@
   - type: GuideHelp
     guides:
     - Chef
+  # Mono
+  - type: ShipRepairable
+    repairTime: 5
+    repairCost: 8

@@ -64,7 +64,10 @@
   - type: StaticPrice
     price: 62
   - type: PowerSwitch
-
+  # Mono
+  - type: ShipRepairable
+    repairTime: 5
+    repairCost: 5
 
 - type: entity
   id: DisposalUnit

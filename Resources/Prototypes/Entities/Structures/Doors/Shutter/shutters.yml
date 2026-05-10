@@ -96,6 +96,10 @@
   - type: IconSmooth
     key: walls
     mode: NoSprite
+  # Mono
+  - type: ShipRepairable
+    repairTime: 3
+    repairCost: 6
 
 
 - type: entity

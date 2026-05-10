@@ -4,7 +4,8 @@
   categories: [ HideSpawnMenu ]
   components:
   - type: Transform
-    anchored: True
+    # anchored: True # Mono
+    gridTraversal: false # Mono
   - type: Sprite
     snapCardinals: true
     noRot: true

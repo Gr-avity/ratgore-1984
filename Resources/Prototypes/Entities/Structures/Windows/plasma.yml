@@ -55,6 +55,10 @@
     resistance: 4
   - type: ExplosionResistance
     damageCoefficient: 0.5
+  # Mono
+  - type: ShipRepairable
+    repairTime: 4
+    repairCost: 4
 
 - type: entity
   id: PlasmaWindowDirectional
@@ -100,6 +104,10 @@
         acts: [ "Destruction" ]
   - type: StaticPrice
     price: 30
+  # Mono
+  - type: ShipRepairable
+    repairTime: 2
+    repairCost: 2
 
 - type: entity
   parent: PlasmaWindow

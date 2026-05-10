@@ -73,6 +73,10 @@
     bodyType: Static
   - type: Transform
     anchored: true
+  # Mono
+  - type: ShipRepairable
+    repairTime: 1
+    repairCost: 1
 
 #Starts unanchored, can be rotated while anchored
 - type: entity
