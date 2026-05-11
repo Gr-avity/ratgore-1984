@@ -25,7 +25,7 @@
       Gold: 200
   - type: StaticPrice
     price: 10000
-    vendPrice: 15000
+    # vendPrice: 15000 # No Field vendPrice
   - type: Tag
     tags:
     - ShipRepairTool
@@ -78,9 +78,9 @@
   components:
   - type: LimitedCharges
     charges: 100
-    whitelist:
-      tags:
-      - ShipRepairTool
+    # whitelist: # Fix this in future or remove 
+    #   tags:
+    #   - ShipRepairTool
   - type: Sprite
     sprite: Objects/Tools/rcd.rsi
     state: ammo
@@ -91,4 +91,4 @@
       Plastic: 100
   - type: StaticPrice
     price: 2000
-    vendPrice: 8000
+    # vendPrice: 8000 # No Field vendPrice
