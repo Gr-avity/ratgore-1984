@@ -823,5 +823,12 @@ Entries:
     id: 102
     time: '2026-05-10T12:37:50.0000000+00:00'
     url: https://github.com/ss14-art/ratgore/pull/189
+  - author: Gorox
+    changes:
+      - type: Add
+        message: Добавлено приложение в КПК, позволяющее удаленно переводить деньги на счета других игроков с комиссией 6%.
+    id: 103
+    time: '2026-05-11T04:31:11.0000000+00:00'
+    url: https://github.com/ss14-art/ratgore/pull/194
 Name: Rat
 Order: -1
