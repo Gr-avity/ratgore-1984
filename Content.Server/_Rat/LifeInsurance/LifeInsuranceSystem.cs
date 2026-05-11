@@ -12,7 +12,10 @@ using Content.Server.Standing;
 using Content.Server.Station.Systems;
 using Content.Shared._Rat.LifeInsurance;
 using Content.Shared.Access.Systems;
+using Content.Server.Chat.Managers;
+using Content.Server.CartridgeLoader;
 using Content.Shared.Ghost;
+using Content.Shared.Chat;
 using Content.Shared.Materials;
 using Content.Shared.Mind;
 using Content.Shared.Mind.Components;
@@ -24,6 +27,8 @@ using Content.Shared.Roles;
 using Content.Shared.Roles.Jobs;
 using Content.Shared.GameTicking;
 using Content.Shared.Inventory;
+using Content.Shared.PDA;
+using Content.Shared.CartridgeLoader;
 using Content.Shared._Shitmed.Body.Organ;
 using Robust.Server.GameObjects;
 using Robust.Server.Player;
@@ -51,6 +56,8 @@ public sealed class LifeInsuranceSystem : EntitySystem
     [Dependency] private readonly IPrototypeManager _prototype = default!;
     [Dependency] private readonly AccessReaderSystem _accessReader = default!;
     [Dependency] private readonly PopupSystem _popup = default!;
+    [Dependency] private readonly CartridgeLoaderSystem _cartridgeLoader = default!;
+    [Dependency] private readonly IChatManager _chatManager = default!;
     [Dependency] private readonly SharedRoleSystem _roles = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly InventorySystem _inventory = default!;
@@ -211,6 +218,13 @@ public sealed class LifeInsuranceSystem : EntitySystem
 
         life.IsInsured = true;
         Dirty(targetMindId, life);
+
+        // Notify the insured living client.
+        var pdaHeader = Loc.GetString("life-insurance-pda-notification-header-insured");
+        var pdaMessage = Loc.GetString("life-insurance-pda-notification-message-insured",
+            ("name", Name(target)));
+        TryNotifyPdaOrMind(target, targetMindId, pdaHeader, pdaMessage, Color.LimeGreen);
+
         UpdateUi(uid, component);
     }
 
@@ -240,6 +254,11 @@ public sealed class LifeInsuranceSystem : EntitySystem
 
         var life = EnsureComp<LifeInsuranceComponent>(targetMindId);
 
+        var targetIsAlive = TryComp<MobStateComponent>(target, out var targetMob)
+            && targetMob.CurrentState == MobState.Alive;
+        var hadPendingRespawn = life.PendingRespawnAt != null;
+        var targetIsGhost = TryComp<GhostComponent>(target, out _);
+
         var hasCoverage = life.IsInsured || life.PendingRespawnAt != null;
         if (!hasCoverage)
         {
@@ -262,9 +281,31 @@ public sealed class LifeInsuranceSystem : EntitySystem
                 _ghost.SetInsuranceRespawnData(target, false, TimeSpan.Zero, ghost);
 
             PushInsuranceStatusToMind(targetMindId, false, TimeSpan.Zero);
+
+            if (targetIsGhost)
+            {
+                // Guest (ghost body) notification.
+                var guestMessage = Loc.GetString("life-insurance-ghost-notification-message-voided",
+                    ("name", Name(target)));
+                TryNotifyMindSession(
+                    targetMindId,
+                    guestMessage,
+                    Color.IndianRed,
+                    audioPath: "/Audio/Items/beep.ogg");
+            }
         }
 
         Dirty(targetMindId, life);
+
+        // Notify living client (PDA + chat) only for non-ghost cancellations.
+        if (targetIsAlive && !hadPendingRespawn)
+        {
+            var pdaHeader = Loc.GetString("life-insurance-pda-notification-header-voided");
+            var pdaMessage = Loc.GetString("life-insurance-pda-notification-message-voided",
+                ("name", Name(target)));
+            TryNotifyPdaOrMind(target, targetMindId, pdaHeader, pdaMessage, Color.IndianRed);
+        }
+
         _popup.PopupEntity(Loc.GetString("life-insurance-popup-void-success"), uid, user, PopupType.Small);
         UpdateUi(uid, component);
     }
@@ -754,5 +795,60 @@ public sealed class LifeInsuranceSystem : EntitySystem
             if (_inventory.TryUnequip(uid, slotDef.Name, out var removed, silent: true, force: true))
                 QueueDel(removed.Value);
         }
+    }
+
+    private EntityUid? TryGetPdaUid(EntityUid target)
+    {
+        // PDA is stored in the "id" slot for our insurance clone bodies.
+        if (!_inventory.TryGetSlotEntity(target, "id", out var pdaUid) || pdaUid is null)
+            return null;
+
+        return TryComp<PdaComponent>(pdaUid.Value, out _)
+            ? pdaUid.Value
+            : null;
+    }
+
+    private void TryNotifyPdaOrMind(
+        EntityUid target,
+        EntityUid targetMindId,
+        string header,
+        string message,
+        Color? fallbackColor = null)
+    {
+        var pdaUid = TryGetPdaUid(target);
+
+        // If PDA notifications are enabled, we don't send a chat fallback to avoid repeating.
+        if (pdaUid is { } pdaEnt
+            && TryComp<CartridgeLoaderComponent>(pdaEnt, out var loader)
+            && loader.NotificationsEnabled)
+        {
+            _cartridgeLoader.SendNotification(pdaEnt, header, message, loader);
+            return;
+        }
+
+        // Otherwise, send a colored chat notification.
+        TryNotifyMindSession(targetMindId, $"{header}\n{message}", fallbackColor);
+    }
+
+    private void TryNotifyMindSession(
+        EntityUid mindId,
+        string message,
+        Color? colorOverride = null,
+        string? audioPath = null,
+        float audioVolume = 0f)
+    {
+        if (!TryComp<MindComponent>(mindId, out var mind) || mind.Session == null)
+            return;
+
+        _chatManager.ChatMessageToOne(
+            ChatChannel.Notifications,
+            message,
+            message,
+            EntityUid.Invalid,
+            hideChat: false,
+            mind.Session.Channel,
+            colorOverride: colorOverride,
+            audioPath: audioPath,
+            audioVolume: audioVolume);
     }
 }
