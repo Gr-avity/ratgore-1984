@@ -96,3 +96,50 @@
         gameMapID: RatKovf
         posX: 500
         posY: -4300
+
+- type: gamePreset
+  id: RatAdventureWar
+  alias:
+  - ratwar
+  name: ЛРНП vs БМС
+  showInVote: true
+  description: Последние дни Тайпана. Длится 2-4 часа. 
+  rules:
+  - RatAdventureWar
+  - HullrotEventScheduler
+
+- type: entity
+  id: RatAdventureWar
+  parent: BaseGameRule
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: AdventureRule
+    gameMapsByID:
+      PortBalreska:
+        gameMapID: PortBalreska
+        posX: -3000
+        posY: -5000
+        IFFColor: Orange
+        IFFFaction: NCWL
+      AuroraImperialis:
+        gameMapID: AuroraImperialis
+        posX: 3000
+        posY: 5000
+        IFFColor: "#C677A5"
+        IFFFaction: DSM
+      IronRing:
+        gameMapID: IronRing
+        posX: -3000
+        posY: 500
+      RatFakel:
+        gameMapID: RatFakel
+        posX: 0
+        posY: 0
+      RatBuran:
+        gameMapID: RatBuran
+        posX: -2500
+        posY: 3500
+      RatKovf:
+        gameMapID: RatKovf
+        posX: 500
+        posY: -4300
