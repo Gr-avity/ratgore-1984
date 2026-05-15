@@ -127,10 +127,6 @@
         posY: 5000
         IFFColor: "#C677A5"
         IFFFaction: DSM
-      IronRing:
-        gameMapID: IronRing
-        posX: -3000
-        posY: 500
       RatFakel:
         gameMapID: RatFakel
         posX: 0
